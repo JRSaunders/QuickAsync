@@ -67,7 +67,9 @@ class CoolClass extends MyApp(){
       $cache = new Cache();
       $cachedData = $cache->getCacheData( $cacheName, $ttl );
       
-      //if there is no cache data go get some from an extenral process and then wait for the result and pick it up.  if it         //takes to long do something else. but job carries on none the less in the background
+      //if there is no cache data go get some from an extenral process and then wait for the result and pick it up.
+      //if it takes to long do something else. but job carries on none the less in the background.
+      
       if(!cachedData){
         $asyncItem = new Item($this,'CoolClass','somethingCool',['John','Lamborghini'],__FILE__);
         $asyncCache = new AsyncCache(
