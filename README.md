@@ -18,6 +18,37 @@ Setup::setBasePath( '/var/www/vhost/some/dir/async' );
 
 ```
 
+
+*Cron Job to Process Async Jobs*
+
+```
+<?php
+
+$multiProcess = new \QuickAsync\MultiProcess(BASEPATH . '../cron.php /async/run/%%file%%');
+$sleepBetweenCollections = 1;
+$killMultiProcessCollectionsAfterSeconds = 60;
+$multiProcess->process($sleepBetweenCollections, $killMultiProcessCollectionsAfterSeconds);
+
+```
+
+*Async Job Process*
+```
+<?php
+
+class Async extends MyApp {
+	public function run( $asyncFile = null ) {
+		if ( isset( $asyncFile ) ) {
+			$queueItem = new \QuickAsync\QueueItem( $asyncFile );
+			$asyncData = $queueItem->getObject();
+		    $queueItem->run( $this );
+		}
+	}
+
+
+}
+
+```
+
 **Simple Use**
 
 ```
@@ -110,32 +141,3 @@ class CoolClass extends MyApp(){
 
 ```
 
-**Cron Job to Process Async Jobs**
-
-```
-<?php
-
-$multiProcess = new \QuickAsync\MultiProcess(BASEPATH . '../cron.php /async/run/%%file%%');
-$sleepBetweenCollections = 1;
-$killMultiProcessCollectionsAfterSeconds = 60;
-$multiProcess->process($sleepBetweenCollections, $killMultiProcessCollectionsAfterSeconds);
-
-```
-
-**Async Job Process**
-```
-<?php
-
-class Async extends MyApp {
-	public function run( $asyncFile = null ) {
-		if ( isset( $asyncFile ) ) {
-			$queueItem = new \QuickAsync\QueueItem( $asyncFile );
-			$asyncData = $queueItem->getObject();
-		    $queueItem->run( $this );
-		}
-	}
-
-
-}
-
-```
