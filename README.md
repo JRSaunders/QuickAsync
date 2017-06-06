@@ -6,6 +6,10 @@
 [![Latest Unstable Version](https://poser.pugx.org/jrsaunders/quickasync/v/unstable)](https://packagist.org/packages/jrsaunders/quickasync)
 [![License](https://poser.pugx.org/jrsaunders/quickasync/license)](https://packagist.org/packages/jrsaunders/quickasync)
 
+Install via composer
+
+```$composer require jrsaunders/quickasync```
+
 **Setup**
 
 Put this in an index or core class.  This will tell your Application where to store its async processes.
