@@ -46,6 +46,8 @@ class CoolClass extends MyApp(){
 
 **Use with QuickCache**
 
+https://github.com/JRSaunders/QuickCache get setup instructions for QuickCache from here.
+
 ```
 <?php
 use QuickAsync\Item;
@@ -108,8 +110,32 @@ class CoolClass extends MyApp(){
 
 ```
 
-**Cron to Process**
+**Cron Job to Process Async Jobs**
 
 ```
+<?php
+
+$multiProcess = new \QuickAsync\MultiProcess(BASEPATH . '../cron.php /async/run/%%file%%');
+$sleepBetweenCollections = 1;
+$killMultiProcessCollectionsAfterSeconds = 60;
+$multiProcess->process($sleepBetweenCollections, $killMultiProcessCollectionsAfterSeconds);
+
 ```
 
+**Async Job Process**
+```
+<?php
+
+class Async extends MyApp {
+	public function run( $asyncFile = null ) {
+		if ( isset( $asyncFile ) ) {
+			$queueItem = new \QuickAsync\QueueItem( $asyncFile );
+			$asyncData = $queueItem->getObject();
+		    $queueItem->run( $this );
+		}
+	}
+
+
+}
+
+```
